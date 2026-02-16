@@ -13,7 +13,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import com.bank.banking_core.application.account.CreateAccountUseCase;
 import com.bank.banking_core.domain.account.Account;
 import com.bank.banking_core.domain.account.AccountRepository;
 
