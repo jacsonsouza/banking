@@ -1,6 +1,7 @@
 package com.bank.banking_core.infrastructure.account;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import com.bank.banking_core.domain.account.Account;
@@ -25,10 +26,10 @@ public class AccountJpaEntity {
     private String status;
 
     @Column(name = "created_at", nullable = false)
-    private String createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
-    private String updatedAt;
+    private LocalDateTime updatedAt;
 
     protected AccountJpaEntity() {}
 
@@ -37,7 +38,7 @@ public class AccountJpaEntity {
         this.number = account.getNumber();
         this.balance = account.getBalance();
         this.status = account.getStatus().name();
-        this.createdAt = account.getCreatedAt().toString();
-        this.updatedAt = account.getUpdatedAt().toString();
+        this.createdAt = account.getCreatedAt();
+        this.updatedAt = account.getUpdatedAt();
     }
 }

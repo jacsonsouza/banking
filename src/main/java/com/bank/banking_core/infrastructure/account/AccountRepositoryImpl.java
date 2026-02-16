@@ -1,13 +1,15 @@
 package com.bank.banking_core.infrastructure.account;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
+
+import org.springframework.stereotype.Repository;
 
 import com.bank.banking_core.domain.account.Account;
 import com.bank.banking_core.domain.account.AccountRepository;
 import com.bank.banking_core.domain.account.AccountStatus;
 
+@Repository
 public class AccountRepositoryImpl
     implements AccountRepository {
 
@@ -43,8 +45,8 @@ public class AccountRepositoryImpl
             entity.getNumber(),
             AccountStatus.valueOf(entity.getStatus()),
             entity.getBalance(),
-            LocalDateTime.parse(entity.getCreatedAt()),
-            LocalDateTime.parse(entity.getUpdatedAt())
+            entity.getCreatedAt(),
+            entity.getUpdatedAt()
         );
     }
 }   

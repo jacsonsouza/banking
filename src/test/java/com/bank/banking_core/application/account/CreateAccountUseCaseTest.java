@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +29,7 @@ class CreateAccountUseCaseTest {
     
     @Test
     void shouldCreateAccountWhenNumberDoesNotExist() {
-        when(accountRepository.findById("A123"))
+        when(accountRepository.findById(UUID.fromString("A123")))
             .thenReturn(Optional.empty());
 
         when(accountRepository.save(any(Account.class)))
