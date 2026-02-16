@@ -32,6 +32,15 @@ public class Account {
         return new Account(UUID.randomUUID(), number);
     }
 
+    public static Account restore(UUID id, String number, AccountStatus status, BigDecimal balance, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        Account account = new Account(id, number);
+        account.status = status;
+        account.balance = balance;
+        account.createdAt = createdAt;
+        account.updatedAt = updatedAt;
+        return account;
+    }
+
     public void deposit(BigDecimal amount) {
         validateAmount(amount);
         this.balance = this.balance.add(amount);
