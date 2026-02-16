@@ -1,4 +1,4 @@
-package com.bank.domain.account;
+package com.bank.banking_core.domain.account;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -7,9 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.math.BigDecimal;
 
 import org.junit.jupiter.api.Test;
-
-import com.bank.banking_core.domain.account.Account;
-import com.bank.banking_core.domain.account.AccountStatus;
 
 class AccountTest {
     @Test

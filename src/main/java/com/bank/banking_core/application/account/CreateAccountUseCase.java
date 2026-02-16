@@ -1,4 +1,4 @@
-package com.bank.application.account;
+package com.bank.banking_core.application.account;
 
 import com.bank.banking_core.domain.account.Account;
 import com.bank.banking_core.domain.account.AccountRepository;
