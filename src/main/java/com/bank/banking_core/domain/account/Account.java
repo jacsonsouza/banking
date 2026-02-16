@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import lombok.Getter;
+
+@Getter
 public class Account {
     private UUID id;
     private String number;
@@ -12,13 +15,21 @@ public class Account {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Account(String number, BigDecimal balance) {
-        this.id = UUID.randomUUID();
+    public Account(UUID id, String number) {
+        this.id = id;
         this.number = number;
         this.status = AccountStatus.ACTIVE;
-        this.balance = balance;
+        this.balance = BigDecimal.ZERO;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public static Account create(String number) {
+        if (number == null || number.isBlank()) {
+            throw new IllegalArgumentException("Account number cannot be null or empty");
+        }
+
+        return new Account(UUID.randomUUID(), number);
     }
 
     public void deposit(BigDecimal amount) {
