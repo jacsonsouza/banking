@@ -1,9 +1,12 @@
 package com.bank.banking_core.infrastructure.web.error;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import com.bank.banking_core.domain.exception.DomainException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -41,6 +44,22 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(apiError);
     }
 
+    @ExceptionHandler(DomainException.class)
+    public ResponseEntity<ApiError> handleDomainException(
+        DomainException ex,
+        HttpServletRequest request
+    ) {
+        ApiError apiError = new ApiError(
+            String.valueOf(System.currentTimeMillis()),
+            toHttpStatus(ex.getErrorCode()).value(),
+            toHttpStatus(ex.getErrorCode()).getReasonPhrase(),
+            ex.getMessage(),
+            request.getRequestURI()
+        );
+
+        return ResponseEntity.badRequest().body(apiError);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleGenericException(
         Exception ex,
@@ -55,5 +74,13 @@ public class GlobalExceptionHandler {
         );
 
         return ResponseEntity.status(500).body(apiError);
+    }
+
+    private HttpStatus toHttpStatus(String errorCode) {
+        try {
+            return ErrorCode.valueOf(errorCode).getStatus();
+        } catch (IllegalArgumentException e) {
+            return HttpStatus.INTERNAL_SERVER_ERROR;
+        }
     }
 }

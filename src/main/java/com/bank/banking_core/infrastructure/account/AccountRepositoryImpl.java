@@ -21,9 +21,14 @@ public class AccountRepositoryImpl
 
     @Override
     public Account save(Account account) {
-        AccountJpaEntity entity = new AccountJpaEntity(account);
-        AccountJpaEntity savedEntity = jpaRepository.save(entity);
-        return toDomain(savedEntity);
+        try {
+            AccountJpaEntity entity = new AccountJpaEntity(account);
+            AccountJpaEntity savedEntity = jpaRepository.save(entity);
+
+            return toDomain(savedEntity);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to save account", e);
+        }
     }
 
     @Override
