@@ -2,9 +2,12 @@ package com.bank.banking_core.infrastructure.web.account;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.bank.banking_core.application.account.CreateAccountUseCase;
 import com.bank.banking_core.domain.account.Account;
+
+import java.net.URI;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +24,10 @@ public class AccountController {
     }
 
     @PostMapping
-    public ResponseEntity<AccountResponse> create(@RequestBody CreateAccountRequest request) {
+    public ResponseEntity<AccountResponse> create(
+        @RequestBody CreateAccountRequest request,
+        UriComponentsBuilder uriBuilder
+    ) {
         Account account = createAccountUseCase.execute(request.getNumber());
 
         AccountResponse response = new AccountResponse(
@@ -31,7 +37,8 @@ public class AccountController {
             account.getStatus().name()
         );
 
-        return ResponseEntity.ok(response);
+        URI location = uriBuilder.path("/accounts/{id}").buildAndExpand(account.getId()).toUri();
+
+        return ResponseEntity.created(location).body(response);
     }
-    
 }
