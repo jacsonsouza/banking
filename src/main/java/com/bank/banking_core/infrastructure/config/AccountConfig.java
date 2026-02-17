@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.bank.banking_core.application.account.CreateAccountUseCase;
+import com.bank.banking_core.application.account.GetAccountByIdUseCase;
 import com.bank.banking_core.domain.account.AccountRepository;
 
 @Configuration
@@ -13,5 +14,12 @@ public class AccountConfig {
         AccountRepository accountRepository
     ) {
         return new CreateAccountUseCase(accountRepository);
+    }
+
+    @Bean
+    public GetAccountByIdUseCase getAccountByIdUseCase(
+        AccountRepository accountRepository
+    ) {
+        return new GetAccountByIdUseCase(accountRepository);
     }
 }
