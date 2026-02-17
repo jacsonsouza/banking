@@ -28,8 +28,7 @@ public class GetAccountByIdUseCaseTest {
 
     @Test
     void shouldReturnAccountWhenAccountExists() {
-        UUID accountId = UUID.randomUUID();
-        Account account = new Account(accountId, "123456789");
+        Account account = Account.create("123456789");
 
         when(accountRepository.findById(account.getId())).thenReturn(Optional.of(account));
 

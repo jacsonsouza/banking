@@ -16,6 +16,9 @@ public class AccountJpaEntity {
     @Id
     private UUID id;
 
+    @Version
+    private Long version;
+
     @Column(name = "account_number", nullable = false, unique = true)
     private String number;
 

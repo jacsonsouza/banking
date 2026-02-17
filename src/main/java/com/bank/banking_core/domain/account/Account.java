@@ -4,6 +4,10 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import com.bank.banking_core.domain.exception.InactiveAccountException;
+import com.bank.banking_core.domain.exception.InsufficientFundsException;
+import com.bank.banking_core.domain.exception.InvalidAmountException;
+
 import lombok.Getter;
 
 @Getter
@@ -15,7 +19,7 @@ public class Account {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Account(UUID id, String number) {
+    private Account(UUID id, String number) {
         this.id = id;
         this.number = number;
         this.status = AccountStatus.ACTIVE;
@@ -42,23 +46,39 @@ public class Account {
     }
 
     public void deposit(BigDecimal amount) {
-        validateAmount(amount);
+        validateCanOperate();
+        validatePositiveAmount(amount);
+        
         this.balance = this.balance.add(amount);
-        this.updatedAt = LocalDateTime.now();
+        touch();
     }
 
     public void withdraw(BigDecimal amount) {
-        validateAmount(amount);
-        if (this.balance.compareTo(amount) < 0) {
-            throw new IllegalArgumentException("Insufficient funds");
-        }
+        validateCanOperate();
+        validatePositiveAmount(amount);
+        validateSufficientFunds(amount);
+        
         this.balance = this.balance.subtract(amount);
-        this.updatedAt = LocalDateTime.now();
+        touch();
     }
 
-    private void validateAmount(BigDecimal amount) {
-        if (amount == null || amount.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Amount must be non-negative");
+    private void validateCanOperate() {
+        if (!this.status.canOperate()) throw new InactiveAccountException();
+    }
+
+    private void validatePositiveAmount(BigDecimal amount) {
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new InvalidAmountException();
         }
+    }
+
+    private void validateSufficientFunds(BigDecimal amount) {
+        if (this.balance.compareTo(amount) <= 0) {
+            throw new InsufficientFundsException();
+        }
+    }
+
+    private void touch() {
+        this.updatedAt = LocalDateTime.now();
     }
 }

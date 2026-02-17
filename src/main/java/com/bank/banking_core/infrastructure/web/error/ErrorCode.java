@@ -5,7 +5,11 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
     VALIDATION_ERROR(HttpStatus.BAD_REQUEST),
     ACCOUNT_ALREADY_EXISTS(HttpStatus.CONFLICT),
-    ACCOUNT_NOT_FOUND(HttpStatus.NOT_FOUND);
+    ACCOUNT_NOT_FOUND(HttpStatus.NOT_FOUND),
+    INSUFFICIENT_FUNDS(HttpStatus.BAD_REQUEST),
+    INACTIVE_ACCOUNT(HttpStatus.BAD_REQUEST),
+    CONCURRENT_MODIFICATION(HttpStatus.CONFLICT),
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR);
 
     private final HttpStatus status;
 

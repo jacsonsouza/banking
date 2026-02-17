@@ -16,4 +16,8 @@ public enum AccountStatus {
     public boolean isClosed() {
         return this == CLOSED;
     }
+
+    public boolean canOperate() {
+        return this == ACTIVE;
+    }
 }

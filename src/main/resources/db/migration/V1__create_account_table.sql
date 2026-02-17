@@ -1,5 +1,6 @@
 CREATE TABLE account (
     id UUID PRIMARY KEY,
+    version BIGINT NOT NULL DEFAULT 0,
     account_number VARCHAR(20) NOT NULL UNIQUE,
     balance numeric(19, 2) NOT NULL,
     status VARCHAR(20) NOT NULL,
