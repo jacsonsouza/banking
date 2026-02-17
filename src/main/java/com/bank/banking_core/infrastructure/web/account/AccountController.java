@@ -7,6 +7,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.bank.banking_core.application.account.CreateAccountUseCase;
 import com.bank.banking_core.domain.account.Account;
 
+import jakarta.validation.Valid;
+
 import java.net.URI;
 
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,7 @@ public class AccountController {
 
     @PostMapping
     public ResponseEntity<AccountResponse> create(
+        @Valid
         @RequestBody CreateAccountRequest request,
         UriComponentsBuilder uriBuilder
     ) {
