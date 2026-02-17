@@ -14,12 +14,12 @@ public class DepositUseCase {
         this.accountRepository = accountRepository;
     }
 
-    public void execute(UUID accountId, BigDecimal amount) {
+    public Account execute(UUID accountId, BigDecimal amount) {
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new AccountNotFoundException());
 
         account.deposit(amount);
         
-        accountRepository.save(account);
+        return accountRepository.update(account);
     }
 }

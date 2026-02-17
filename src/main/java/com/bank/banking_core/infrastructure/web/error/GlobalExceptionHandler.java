@@ -88,7 +88,7 @@ public class GlobalExceptionHandler {
             String.valueOf(System.currentTimeMillis()),
             500,
             "Internal Server Error",
-            "An unexpected error occurred.",
+            ex.getMessage(),
             request.getRequestURI()
         );
 

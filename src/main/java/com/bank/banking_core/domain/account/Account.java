@@ -73,7 +73,7 @@ public class Account {
     }
 
     private void validateSufficientFunds(BigDecimal amount) {
-        if (this.balance.compareTo(amount) <= 0) {
+        if (this.balance.compareTo(amount) < 0) {
             throw new InsufficientFundsException();
         }
     }

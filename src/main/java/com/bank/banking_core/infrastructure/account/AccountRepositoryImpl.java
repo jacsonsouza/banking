@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.bank.banking_core.domain.account.Account;
 import com.bank.banking_core.domain.account.AccountRepository;
 import com.bank.banking_core.domain.account.AccountStatus;
+import com.bank.banking_core.domain.exception.AccountNotFoundException;
 
 @Repository
 public class AccountRepositoryImpl
@@ -20,15 +21,22 @@ public class AccountRepositoryImpl
     }
 
     @Override
-    public Account save(Account account) {
-        try {
-            AccountJpaEntity entity = new AccountJpaEntity(account);
-            AccountJpaEntity savedEntity = jpaRepository.save(entity);
+    public Account create(Account account) {
+        AccountJpaEntity entity = new AccountJpaEntity(account);
+        AccountJpaEntity savedEntity = jpaRepository.save(entity);
 
-            return toDomain(savedEntity);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to save account", e);
-        }
+        return toDomain(savedEntity);
+    }
+
+    @Override
+    public Account update(Account account) {
+        AccountJpaEntity entity = jpaRepository.findById(account.getId())
+            .orElseThrow(() -> new AccountNotFoundException());
+
+        entity.applyChanges(account);
+        AccountJpaEntity updatedEntity = jpaRepository.save(entity);
+
+        return toDomain(updatedEntity);
     }
 
     @Override
@@ -43,7 +51,6 @@ public class AccountRepositoryImpl
             .map(this::toDomain);
     }
     
-
     private Account toDomain(AccountJpaEntity entity) {
         return Account.restore(
             entity.getId(),

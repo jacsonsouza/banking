@@ -17,9 +17,10 @@ public class AccountJpaEntity {
     private UUID id;
 
     @Version
+    @Column(nullable = false)
     private Long version;
 
-    @Column(name = "account_number", nullable = false, unique = true)
+    @Column(name = "account_number", nullable = false, unique = true, updatable = false)
     private String number;
 
     @Column(nullable = false)
@@ -28,7 +29,7 @@ public class AccountJpaEntity {
     @Column(nullable = false)
     private String status;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
@@ -43,5 +44,13 @@ public class AccountJpaEntity {
         this.status = account.getStatus().name();
         this.createdAt = account.getCreatedAt();
         this.updatedAt = account.getUpdatedAt();
+    }
+
+    public Account applyChanges(Account account) {
+        this.balance = account.getBalance();
+        this.status = account.getStatus().name();
+        this.updatedAt = LocalDateTime.now();
+        
+        return account;
     }
 }

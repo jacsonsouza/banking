@@ -34,7 +34,7 @@ class CreateAccountUseCaseTest {
         when(accountRepository.findByNumber(accountNumber))
             .thenReturn(Optional.empty());
 
-        when(accountRepository.save(any(Account.class)))
+        when(accountRepository.create(any(Account.class)))
             .thenAnswer(invocation -> invocation.getArgument(0));
 
         Account account = createAccountUseCase.execute(accountNumber);
@@ -42,7 +42,7 @@ class CreateAccountUseCaseTest {
         assertNotNull(account);
         assertEquals(accountNumber, account.getNumber());
 
-        verify(accountRepository).save(any(Account.class));
+        verify(accountRepository).create(any(Account.class));
     }
 
     @Test

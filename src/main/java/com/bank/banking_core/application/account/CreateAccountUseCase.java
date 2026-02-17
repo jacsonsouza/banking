@@ -15,7 +15,7 @@ public class CreateAccountUseCase {
         validateAccount(accountNumber);
 
         Account account = Account.create(accountNumber);
-        return accountRepository.save(account);
+        return accountRepository.create(account);
     }
 
     private void validateAccount(String accountNumber) {
