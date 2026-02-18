@@ -1,4 +1,4 @@
-package com.bank.banking_core.application.account;
+package com.bank.banking_core.unit.application.account;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.instancio.Select.field;
@@ -7,7 +7,10 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.bank.banking_core.domain.account.*;
+import com.bank.banking_core.application.account.WithdrawUseCase;
+import com.bank.banking_core.domain.account.Account;
+import com.bank.banking_core.domain.account.AccountRepository;
+import com.bank.banking_core.domain.account.AccountStatus;
 import com.bank.banking_core.domain.exception.*;
 import java.math.BigDecimal;
 import java.util.Optional;

@@ -1,9 +1,11 @@
-package com.bank.banking_core.domain.account;
+package com.bank.banking_core.unit.domain.account;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.bank.banking_core.domain.account.Account;
+import com.bank.banking_core.domain.account.AccountStatus;
 import com.bank.banking_core.domain.exception.InsufficientFundsException;
 import com.bank.banking_core.domain.exception.InvalidAmountException;
 import java.math.BigDecimal;
