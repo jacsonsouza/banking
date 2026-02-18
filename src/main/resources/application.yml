@@ -1,6 +1,10 @@
 spring:
   application:
     name: banking-core
+  
+  messages:
+    basename: locales/messages
+    encoding: UTF-8
 
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/bank}
