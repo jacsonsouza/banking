@@ -1,6 +1,9 @@
 spring:
   application:
     name: banking-core
+
+  main:
+    banner-mode: off
   
   messages:
     basename: locales/messages
