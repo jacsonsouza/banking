@@ -2,13 +2,6 @@ spring:
   application:
     name: banking-core
 
-  main:
-    banner-mode: off
-  
-  messages:
-    basename: locales/messages
-    encoding: UTF-8
-
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/bank}
     username: ${SPRING_DATASOURCE_USERNAME:bank_user}
