@@ -16,18 +16,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-class CreateAccountUseCaseTest {
+public class CreateAccountUseCaseTest {
   private AccountRepository accountRepository;
   private CreateAccountUseCase createAccountUseCase;
 
   @BeforeEach
-  void setUp() {
+  public void setUp() {
     accountRepository = Mockito.mock(AccountRepository.class);
     createAccountUseCase = new CreateAccountUseCase(accountRepository);
   }
 
   @Test
-  void shouldCreateAccountWhenNumberDoesNotExist() {
+  public void shouldCreateAccountWhenNumberDoesNotExist() {
     String accountNumber = "A12345";
 
     when(accountRepository.findByNumber(accountNumber)).thenReturn(Optional.empty());
@@ -44,7 +44,7 @@ class CreateAccountUseCaseTest {
   }
 
   @Test
-  void shouldThrowExceptionWhenAccountAlreadyExists() {
+  public void shouldThrowExceptionWhenAccountAlreadyExists() {
     String accountNumber = "A12345";
 
     when(accountRepository.findByNumber(accountNumber))

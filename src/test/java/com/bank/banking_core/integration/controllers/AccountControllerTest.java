@@ -6,16 +6,10 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.bank.banking_core.application.account.CreateAccountUseCase;
-import com.bank.banking_core.application.account.DepositUseCase;
-import com.bank.banking_core.application.account.GetAccountByIdUseCase;
-import com.bank.banking_core.application.account.WithdrawUseCase;
+import com.bank.banking_core.application.account.*;
 import com.bank.banking_core.domain.account.Account;
 import com.bank.banking_core.domain.exception.AccountAlreadyExistsException;
-import com.bank.banking_core.infrastructure.web.account.AccountController;
-import com.bank.banking_core.infrastructure.web.account.CreateAccountRequest;
-import com.bank.banking_core.infrastructure.web.account.DepositRequest;
-import com.bank.banking_core.infrastructure.web.account.WithdrawRequest;
+import com.bank.banking_core.infrastructure.web.account.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.math.BigDecimal;
 import org.instancio.Instancio;
@@ -56,10 +50,10 @@ public class AccountControllerTest {
   public void testShouldCreateAcountSuccessfully() throws Exception {
     CreateAccountRequest request =
         Instancio.of(CreateAccountRequest.class)
-            .set(field(CreateAccountRequest::getNumber), "A123456")
+            .set(field(CreateAccountRequest::number), "A123456")
             .create();
 
-    when(createAccountUseCase.execute(request.getNumber())).thenReturn(account);
+    when(createAccountUseCase.execute(request.number())).thenReturn(account);
 
     mockMvc
         .perform(
@@ -75,10 +69,10 @@ public class AccountControllerTest {
   public void testShouldNotCreateAcountIfAlreadyExists() throws Exception {
     CreateAccountRequest request =
         Instancio.of(CreateAccountRequest.class)
-            .set(field(CreateAccountRequest::getNumber), "A123456")
+            .set(field(CreateAccountRequest::number), "A123456")
             .create();
 
-    when(createAccountUseCase.execute(request.getNumber()))
+    when(createAccountUseCase.execute(request.number()))
         .thenThrow(new AccountAlreadyExistsException());
 
     mockMvc
@@ -95,7 +89,7 @@ public class AccountControllerTest {
   public void testShouldNotCreateAcountIfNumberIsInvalid() throws Exception {
     CreateAccountRequest request =
         Instancio.of(CreateAccountRequest.class)
-            .set(field(CreateAccountRequest::getNumber), "A12")
+            .set(field(CreateAccountRequest::number), "A12")
             .create();
 
     mockMvc
@@ -112,7 +106,7 @@ public class AccountControllerTest {
   public void testShouldNotCreateAcountIfNumberIsBlank() throws Exception {
     CreateAccountRequest request =
         Instancio.of(CreateAccountRequest.class)
-            .set(field(CreateAccountRequest::getNumber), "")
+            .set(field(CreateAccountRequest::number), "")
             .create();
 
     mockMvc
@@ -144,7 +138,7 @@ public class AccountControllerTest {
 
     DepositRequest request =
         Instancio.of(DepositRequest.class)
-            .set(field(DepositRequest::getAmount), amountToDeposit)
+            .set(field(DepositRequest::amount), amountToDeposit)
             .create();
 
     when(depositUseCase.execute(account.getId(), amountToDeposit)).thenReturn(account);
@@ -165,7 +159,7 @@ public class AccountControllerTest {
 
     DepositRequest request =
         Instancio.of(DepositRequest.class)
-            .set(field(DepositRequest::getAmount), amountToDeposit)
+            .set(field(DepositRequest::amount), amountToDeposit)
             .create();
 
     mockMvc

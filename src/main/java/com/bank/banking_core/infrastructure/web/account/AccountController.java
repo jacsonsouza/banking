@@ -40,7 +40,7 @@ public class AccountController {
   @PostMapping
   public ResponseEntity<AccountResponse> create(
       @Valid @RequestBody CreateAccountRequest request, UriComponentsBuilder uriBuilder) {
-    Account account = createAccountUseCase.execute(request.getNumber());
+    Account account = createAccountUseCase.execute(request.number());
 
     URI location = uriBuilder.path("/accounts/{id}").buildAndExpand(account.getId()).toUri();
 
@@ -57,7 +57,7 @@ public class AccountController {
   @PatchMapping("/{id}/deposit")
   public ResponseEntity<AccountResponse> deposit(
       @PathVariable UUID id, @Valid @RequestBody DepositRequest request) {
-    Account account = depositUseCase.execute(id, request.getAmount());
+    Account account = depositUseCase.execute(id, request.amount());
 
     return ResponseEntity.ok(toResponse(account));
   }

@@ -20,13 +20,13 @@ public class GetAccountByIdUseCaseTest {
   private GetAccountByIdUseCase getAccountByIdUseCase;
 
   @BeforeEach
-  void setUp() {
+  public void setUp() {
     accountRepository = Mockito.mock(AccountRepository.class);
     getAccountByIdUseCase = new GetAccountByIdUseCase(accountRepository);
   }
 
   @Test
-  void shouldReturnAccountWhenAccountExists() {
+  public void shouldReturnAccountWhenAccountExists() {
     Account account = Account.create("123456789");
 
     when(accountRepository.findById(account.getId())).thenReturn(Optional.of(account));
@@ -39,7 +39,7 @@ public class GetAccountByIdUseCaseTest {
   }
 
   @Test
-  void shouldThrowExceptionWhenAccountDoesNotExist() {
+  public void shouldThrowExceptionWhenAccountDoesNotExist() {
     UUID accountId = UUID.randomUUID();
 
     when(accountRepository.findById(accountId)).thenReturn(Optional.empty());
